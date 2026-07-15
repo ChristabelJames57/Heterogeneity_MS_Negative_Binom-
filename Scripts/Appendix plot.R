@@ -121,11 +121,13 @@ draws_array <- stan_out$draws(format = "array")
 
 
 # Load draws and diagnostics
+#file larger than size but cN BE REAd in here
+
 draws_array <- readRDS("./output/Mhet_McMc_array.rds")
 
 #remove NAS
 param_names <- dimnames(draws_array)$variable
-
+#https://drive.google.com/file/d/1K7Jt3PlawX9tP2VHHnBWt79z-x1yfxJB/view?usp=sharing
 na_params <- sapply(param_names, function(p) {
   any(is.na(draws_array[, , p]))
 })
@@ -224,15 +226,14 @@ diag <- stan_out$sampler_diagnostics()
 #saveRDS(draws, "./Output/draws_Mhet_NB.rds")
 #saveRDS(diag,  "./Output/diag_Mhet_NB.rds")
 
-# ---------------------------------------------------------
 # Load draws and diagnostics
-# ---------------------------------------------------------
+#files larger than size but can be found here 
+#https://drive.google.com/file/d/1PU8dxpQIef8DJ0ioWQ0uH9MFdCkc1JKs/view?usp=sharing
 draws <- readRDS("./Output/draws_Mhet_NB.rds")
 diag  <- readRDS("./Output/diag_Mhet_NB.rds")
 
-# ---------------------------------------------------------
 # Rhat and ESS
-# ---------------------------------------------------------
+
 summ <- summarise_draws(draws)
 
 max_rhat     <- max(summ$rhat,      na.rm = TRUE)
@@ -243,7 +244,6 @@ cat("Maximum Rhat:        ", max_rhat, "\n")
 cat("Minimum bulk ESS:    ", min_ess_bulk, "\n")
 cat("Minimum tail ESS:    ", min_ess_tail, "\n")
 
-# ---------------------------------------------------------
 # Divergent transitions (3D array)
 
 var_div <- which(dimnames(diag)$variable == "divergent__")
@@ -251,16 +251,16 @@ divergent_vals <- diag[, , var_div]
 n_divergent <- sum(divergent_vals)
 cat("Divergent transitions:", n_divergent, "\n")
 
-# ---------------------------------------------------------
-# E-BFMI (manual computation)
-# ---------------------------------------------------------
+
+# E-BFMI(manual computation
+
 var_energy <- which(dimnames(diag)$variable == "energy__")
 energy_vals <- diag[, , var_energy]
 
-# Flatten all chains
+# flatten all chains
 energy_vec <- as.vector(energy_vals)
 
-# BFMI formula: Var(E) / mean(diff(E)^2)
+# BFMI formula
 bfmi_val <- var(energy_vec) / mean(diff(energy_vec)^2)
 
 cat("E-BFMI:               ", bfmi_val, "\n")
@@ -403,6 +403,8 @@ rm(list = ls())
 #load in
 #stan_out <- readRDS("./Output/stan_out_Mhet_prior.rds")
 #data_sir <- readRDS("./Output/data_sir_Mhet_prior.rds")
+#files too large but can be found in the link
+#https://drive.google.com/file/d/1PU8dxpQIef8DJ0ioWQ0uH9MFdCkc1JKs/view?usp=sharing
 draws <- readRDS("./Output/draws_model11_heterogeneity_NB.rds")
 t_last <- readRDS("./Output/t_last.rds")
 cases_matrix <- readRDS("./Output/cases_matrix.rds")
@@ -485,6 +487,8 @@ library(ggplot2)
 
 #read in
 # Load saved posterior draws
+#File larger than this but can be found here.
+
 draws <- readRDS("./Output/draws_model11_heterogeneity_NB.rds")
 
 # Convert to draws_df

@@ -47,3 +47,7 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+#files larger than 100mb
+Output/draws_Mhet_NB.rds
+Output/posterior_all_main_parameters2.rds
+Output/Mhet_McMc_array.rds
